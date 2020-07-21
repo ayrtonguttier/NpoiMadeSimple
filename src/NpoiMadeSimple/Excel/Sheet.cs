@@ -1,4 +1,5 @@
-﻿using NPOI.SS.UserModel;
+﻿using NPOI.SS.Formula.Functions;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,19 @@ namespace NpoiMadeSimple.Excel
         {
             get
             {
-                if (pos <= headerRow || pos >= sheet.LastRowNum)
+                int lastPosition = sheet.LastRowNum - (headerRow + 1);
+                int position = pos + (headerRow + 1);
+
+                if (pos < 0 || pos > lastPosition)
                     throw new IndexOutOfRangeException();
 
-                return new Row(header, sheet.GetRow(pos));
+                return new Row(header, sheet.GetRow(position));
             }
         }
 
         public int Length
         {
-            get { return sheet.LastRowNum; }
+            get { return sheet.LastRowNum - headerRow; }
         }
 
         public Sheet(ISheet sheet)
