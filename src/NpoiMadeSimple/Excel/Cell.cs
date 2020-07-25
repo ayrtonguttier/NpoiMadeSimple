@@ -58,6 +58,11 @@ namespace NpoiMadeSimple.Excel
             }
         }
 
+        public string GetAddress()
+        {
+            return cell.Address.ToString();
+        }
+
         public override string ToString()
         {
             return GetValue();

@@ -62,6 +62,8 @@
     <Compile Include="Excel\Cell.cs" />
     <Compile Include="Excel\Row.cs" />
     <Compile Include="Excel\Sheet.cs" />
+    <Compile Include="Excel\Typed\Sheet.cs" />
+    <Compile Include="Excel\Typed\SheetColumnAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,13 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NpoiMadeSimple.Excel;
+using NpoiMadeSimple.Excel.Typed;
+using System;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Test.Model;
 
 namespace Test
 {
@@ -103,5 +107,54 @@ namespace Test
                 System.Diagnostics.Debug.WriteLine(resultado);
             }
         }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            string file = @".\Files\SampleData.xlsx";
+            IWorkbook workbook;
+            using (FileStream stream = new FileStream(file, FileMode.Open))
+            {
+                if (file.EndsWith(".xlsx"))
+                    workbook = new XSSFWorkbook(stream);
+                else
+                    workbook = new HSSFWorkbook(stream);
+            }
+
+
+            Sheet<FileModel> sheet = new Sheet<FileModel>(workbook.GetSheet("SalesOrders"));
+
+            foreach (var item in sheet.AllItens())
+            {
+                System.Diagnostics.Debug.WriteLine(item.Item);
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            string file = @".\Files\SampleData.xlsx";
+            IWorkbook workbook;
+            using (FileStream stream = new FileStream(file, FileMode.Open))
+            {
+                if (file.EndsWith(".xlsx"))
+                    workbook = new XSSFWorkbook(stream);
+                else
+                    workbook = new HSSFWorkbook(stream);
+            }
+
+            Action action = () =>
+            {
+                Sheet<FileModelError> sheet = new Sheet<FileModelError>(workbook.GetSheet("SalesOrders"));
+
+                foreach (var item in sheet.AllItens())
+                {
+                    System.Diagnostics.Debug.WriteLine(item.Item);
+                }
+            };
+
+            Assert.ThrowsException<Exception>(action);
+        }
+
     }
 }
